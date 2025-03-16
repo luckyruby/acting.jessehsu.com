@@ -708,6 +708,22 @@
                 closeButton.style.background = 'rgba(0,0,0,0.5)';
                 
                 closeButton.addEventListener('click', function() {
+                    // Exit fullscreen if we're in fullscreen mode
+                    if (document.fullscreenElement || 
+                        document.webkitFullscreenElement ||
+                        document.mozFullScreenElement ||
+                        document.msFullscreenElement) {
+                        if (document.exitFullscreen) {
+                            document.exitFullscreen();
+                        } else if (document.webkitExitFullscreen) {
+                            document.webkitExitFullscreen();
+                        } else if (document.mozCancelFullScreen) {
+                            document.mozCancelFullScreen();
+                        } else if (document.msExitFullscreen) {
+                            document.msExitFullscreen();
+                        }
+                    }
+                    
                     document.body.removeChild(fullscreenContainer);
                 });
                 
@@ -724,6 +740,22 @@
                 // Also allow closing by tapping/clicking on the video container (but not the video itself)
                 fullscreenContainer.addEventListener('click', function(e) {
                     if (e.target === fullscreenContainer) {
+                        // Exit fullscreen if we're in fullscreen mode
+                        if (document.fullscreenElement || 
+                            document.webkitFullscreenElement ||
+                            document.mozFullScreenElement ||
+                            document.msFullscreenElement) {
+                            if (document.exitFullscreen) {
+                                document.exitFullscreen();
+                            } else if (document.webkitExitFullscreen) {
+                                document.webkitExitFullscreen();
+                            } else if (document.mozCancelFullScreen) {
+                                document.mozCancelFullScreen();
+                            } else if (document.msExitFullscreen) {
+                                document.msExitFullscreen();
+                            }
+                        }
+                        
                         document.body.removeChild(fullscreenContainer);
                     }
                 });
@@ -733,23 +765,60 @@
                 
                 // Close when video ends
                 video.addEventListener('ended', function() {
+                    // Exit fullscreen if we're in fullscreen mode
+                    if (document.fullscreenElement || 
+                        document.webkitFullscreenElement ||
+                        document.mozFullScreenElement ||
+                        document.msFullscreenElement) {
+                        if (document.exitFullscreen) {
+                            document.exitFullscreen();
+                        } else if (document.webkitExitFullscreen) {
+                            document.webkitExitFullscreen();
+                        } else if (document.mozCancelFullScreen) {
+                            document.mozCancelFullScreen();
+                        } else if (document.msExitFullscreen) {
+                            document.msExitFullscreen();
+                        }
+                    }
+                    
                     if (document.getElementById('fullscreen-video-container')) {
                         document.body.removeChild(fullscreenContainer);
                     }
                 });
                 
-                // Try to request fullscreen on the video element (this may not work on all devices due to autoplay restrictions)
-                try {
-                    if (video.requestFullscreen) {
-                        video.requestFullscreen();
-                    } else if (video.webkitRequestFullscreen) { /* Safari */
-                        video.webkitRequestFullscreen();
-                    } else if (video.msRequestFullscreen) { /* IE11 */
-                        video.msRequestFullscreen();
-                    }
-                } catch (e) {
-                    console.log("Couldn't enter fullscreen mode:", e);
-                }
+                // Ensure video starts playing before requesting fullscreen (important for mobile)
+                video.addEventListener('canplay', function() {
+                    // Wait a tiny bit to ensure video is ready
+                    setTimeout(function() {
+                        // Try to enter true fullscreen mode
+                        if (isMobileDevice()) {
+                            // On mobile, try the video element directly for better results
+                            if (video.requestFullscreen) {
+                                video.requestFullscreen().catch(e => console.log("Couldn't enter fullscreen:", e));
+                            } else if (video.webkitRequestFullscreen) {
+                                video.webkitRequestFullscreen().catch(e => console.log("Couldn't enter fullscreen:", e));
+                            } else if (video.mozRequestFullScreen) {
+                                video.mozRequestFullScreen().catch(e => console.log("Couldn't enter fullscreen:", e));
+                            } else if (video.msRequestFullscreen) {
+                                video.msRequestFullscreen().catch(e => console.log("Couldn't enter fullscreen:", e));
+                            }
+                        } else {
+                            // On desktop, use the container for better visual appearance
+                            if (fullscreenContainer.requestFullscreen) {
+                                fullscreenContainer.requestFullscreen().catch(e => console.log("Couldn't enter fullscreen:", e));
+                            } else if (fullscreenContainer.webkitRequestFullscreen) {
+                                fullscreenContainer.webkitRequestFullscreen().catch(e => console.log("Couldn't enter fullscreen:", e));
+                            } else if (fullscreenContainer.mozRequestFullScreen) {
+                                fullscreenContainer.mozRequestFullScreen().catch(e => console.log("Couldn't enter fullscreen:", e));
+                            } else if (fullscreenContainer.msRequestFullscreen) {
+                                fullscreenContainer.msRequestFullscreen().catch(e => console.log("Couldn't enter fullscreen:", e));
+                            }
+                        }
+                    }, 100);
+                });
+                
+                // Force play (needed for some mobile browsers)
+                video.play().catch(e => console.log("Autoplay prevented, user may need to interact first:", e));
             }
             
             // Modal functionality
