@@ -460,17 +460,17 @@
 
                 <!-- Portfolio Item 3 -->
                 <div class="portfolio-item">
-                    <div class="video-container" data-video="tech-launch">
-                        <video class="video-preview" loop muted preload="none" poster="/api/placeholder/400/225">
-                            <source src="#" type="video/mp4">
+                    <div class="video-container" data-video="les-mills">
+                        <video class="video-preview" loop muted preload="auto" poster="/api/placeholder/400/225">
+                            <source src="https://acting.jessehsu.com/videos/les_mills_ceremony.mp4" type="video/mp4">
                         </video>
                         <div class="video-placeholder">
                             <div class="video-play-button"></div>
                         </div>
                     </div>
                     <div class="portfolio-details">
-                        <h3>Tech Product Launch</h3>
-                        <p>Digital campaign for a technology company's flagship product release.</p>
+                        <h3>Les Mills: Ceremony</h3>
+                        <p>Dave Meyers</p>
                     </div>
                 </div>
 
@@ -574,8 +574,8 @@
                     case 'google-pixel':
                         videoPreview.poster = "/api/placeholder/400/225?text=Google Pixel";
                         break;
-                    case 'tech-launch':
-                        videoPreview.poster = "/api/placeholder/400/225?text=Tech Launch";
+                    case 'les-mills':
+                        videoPreview.poster = "/api/placeholder/400/225?text=Les Mills";
                         break;
                     case 'healthcare':
                         videoPreview.poster = "/api/placeholder/400/225?text=Healthcare";
@@ -594,7 +594,7 @@
                 container.addEventListener('mouseenter', function() {
                     // In a real implementation, this would be the actual video source
                     // For videos with actual sources, we use them directly
-                    if (videoId === 'rbc-apple' || videoId === 'google-pixel') {
+                    if (videoId === 'rbc-apple' || videoId === 'google-pixel' || videoId === 'les-mills') {
                         // The source is already set in the HTML
                         videoPreview.load();
                         videoPreview.play().catch(e => {
@@ -641,6 +641,14 @@
                         videoPlayer.innerHTML = `
                             <video width="100%" controls autoplay>
                                 <source src="https://acting.jessehsu.com/videos/teampixel.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        `;
+                    } else if (videoId === 'les-mills') {
+                        // Use the actual video for Les Mills
+                        videoPlayer.innerHTML = `
+                            <video width="100%" controls autoplay>
+                                <source src="https://acting.jessehsu.com/videos/les_mills_ceremony.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
                         `;
