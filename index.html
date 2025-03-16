@@ -617,6 +617,61 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Easter Egg functionality
+            let tapCount = 0;
+            let lastTap = 0;
+            let keySequence = "";
+            const targetSequence = "luckyruby";
+            const easterEggVideoSrc = "https://acting.jessehsu.com/videos/jesse_bts.mp4";
+            
+            // Handle tap events for mobile
+            document.body.addEventListener('touchstart', function(e) {
+                const currentTime = new Date().getTime();
+                const tapTime = currentTime - lastTap;
+                
+                // Reset if more than 1000ms between taps
+                if (tapTime > 1000) {
+                    tapCount = 1;
+                } else {
+                    tapCount++;
+                }
+                
+                lastTap = currentTime;
+                
+                // Check if we've reached 7 taps
+                if (tapCount >= 7) {
+                    playEasterEggVideo();
+                    tapCount = 0;
+                }
+            });
+            
+            // Handle keyboard events for desktop
+            document.addEventListener('keydown', function(e) {
+                keySequence += e.key.toLowerCase();
+                
+                // Only keep the most recent characters matching the target length
+                if (keySequence.length > targetSequence.length) {
+                    keySequence = keySequence.substring(keySequence.length - targetSequence.length);
+                }
+                
+                // Check if sequence matches
+                if (keySequence === targetSequence) {
+                    playEasterEggVideo();
+                    keySequence = "";
+                }
+            });
+            
+            // Function to play the easter egg video
+            function playEasterEggVideo() {
+                videoPlayer.innerHTML = `
+                    <video width="100%" controls autoplay>
+                        <source src="${easterEggVideoSrc}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                `;
+                modal.style.display = 'flex';
+            }
+            
             // Modal functionality
             const videoContainers = document.querySelectorAll('.video-container');
             const modal = document.getElementById('videoModal');
