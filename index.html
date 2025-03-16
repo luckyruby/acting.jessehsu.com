@@ -76,11 +76,22 @@
             border: none; /* Ensure no border */
         }
 
+        .hero-image a {
+            display: block;
+            height: 100%;
+            cursor: pointer;
+        }
+
         .hero-image img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             border-radius: 0; /* Ensure no rounded corners */
+            transition: opacity 0.3s ease;
+        }
+        
+        .hero-image:hover img {
+            opacity: 0.9;
         }
 
         .hero-text {
@@ -455,7 +466,9 @@
         <div class="container">
             <div class="hero">
                 <div class="hero-image">
-                    <img src="https://acting.jessehsu.com/images/headshot.jpg" alt="Jesse Hsu headshot">
+                    <a href="https://www.imdb.com/name/nm6608519/" target="_blank">
+                        <img src="https://acting.jessehsu.com/images/headshot.jpg" alt="Jesse Hsu headshot">
+                    </a>
                 </div>
                 <div class="hero-text">
                     <h1><a href="#about" style="color: var(--light-text); text-decoration: none;">JESSE HSU</a></h1>
