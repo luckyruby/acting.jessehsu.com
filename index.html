@@ -4,494 +4,103 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Commercial Actor Portfolio</title>
-    <style>
-        :root {
-            --primary-color: #3a3a3a;
-            --secondary-color: #f8f8f8;
-            --accent-color: #e63946;
-            --text-color: #333;
-            --light-text: #f8f8f8;
-            --spacing: 1rem;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-        }
-
-        body {
-            color: var(--text-color);
-            line-height: 1.6;
-            background-color: #fff;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        /* Header Styles */
-        header {
-            background-color: #222;
-            background-image:
-                linear-gradient(45deg, rgba(255,255,255,.03) 25%, transparent 25%, transparent 75%, rgba(255,255,255,.03) 75%, rgba(255,255,255,.03)),
-                linear-gradient(45deg, rgba(255,255,255,.03) 25%, transparent 25%, transparent 75%, rgba(255,255,255,.03) 75%, rgba(255,255,255,.03));
-            background-size: 8px 8px;
-            background-position: 0 0, 4px 4px;
-            color: var(--light-text);
-            position: relative;
-            padding: 0;
-            margin-bottom: 30px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-            z-index: 10;
-        }
-
-        .banner-gradient {
-            position: absolute;
-            bottom: -30px;
-            left: 0;
-            right: 0;
-            height: 30px;
-            background-image: linear-gradient(to bottom, rgba(0,0,0,0.25), rgba(0,0,0,0));
-            z-index: 5;
-        }
-
-        .hero {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            min-height: 450px;
-        }
-
-        .hero-image {
-            height: 100%;
-            overflow: hidden;
-            border-radius: 0; /* Ensure no rounded corners */
-            border: none; /* Ensure no border */
-        }
-
-        .hero-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 0; /* Ensure no rounded corners */
-        }
-
-        .hero-text {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 2rem 3rem;
-        }
-
-        .hero h1 {
-            font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            line-height: 1.1;
-        }
-
-        .hero-divider {
-            width: 100%;
-            height: 2px;
-            background-color: var(--accent-color);
-            margin-bottom: 1.5rem;
-        }
-
-        .hero-contact {
-            font-size: 1.1rem;
-            line-height: 1.6;
-        }
-
-        .hero-contact p {
-            margin-bottom: 0.5rem;
-        }
-
-        /* Navigation */
-        nav {
-            display: flex;
-            justify-content: center;
-            background-color: rgba(0,0,0,0.2);
-            padding: 1rem 0;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        nav a {
-            color: var(--light-text);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: var(--accent-color);
-        }
-
-        /* Main Content */
-        main {
-            padding: 3rem 0;
-            position: relative;
-            z-index: 1;
-            margin-top: 20px;
-            background-color: white;
-        }
-
-        section {
-            margin-bottom: 4rem;
-        }
-
-        .section-title {
-            text-align: left;
-            margin-bottom: 2rem;
-            position: relative;
-        }
-
-        .section-title h2 {
-            font-size: 2rem;
-            display: inline-block;
-            padding-bottom: 0.5rem;
-            border-bottom: 3px solid var(--accent-color);
-        }
-
-        /* Portfolio Grid */
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .portfolio-item {
-            background-color: var(--secondary-color);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .portfolio-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        .video-container {
-            position: relative;
-            width: 100%;
-            padding-top: 56.25%; /* 16:9 Aspect Ratio */
-            background-color: #000;
-            cursor: pointer;
-        }
-
-        .video-placeholder {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #1a1a1a;
-            color: white;
-        }
-
-        .video-play-button {
-            width: 60px;
-            height: 60px;
-            background-color: rgba(230, 57, 70, 0.8);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background-color 0.3s;
-        }
-
-        .video-play-button:hover {
-            background-color: var(--accent-color);
-        }
-
-        .video-play-button::after {
-            content: '';
-            display: block;
-            width: 0;
-            height: 0;
-            border-top: 10px solid transparent;
-            border-bottom: 10px solid transparent;
-            border-left: 15px solid white;
-            margin-left: 5px;
-        }
-
-        .portfolio-details {
-            padding: 1.5rem;
-        }
-
-        .portfolio-details h3 {
-            margin-bottom: 0.5rem;
-            font-size: 1.2rem;
-        }
-
-        .portfolio-details p {
-            color: #666;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        /* About Section */
-        .about-content {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .about-image {
-            flex: 1;
-            min-width: 280px;
-        }
-
-        .about-image img {
-            width: 100%;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        .about-text {
-            flex: 2;
-            min-width: 280px;
-        }
-
-        /* Footer */
-        footer {
-            background-color: #222;
-            background-image:
-                linear-gradient(45deg, rgba(255,255,255,.03) 25%, transparent 25%, transparent 75%, rgba(255,255,255,.03) 75%, rgba(255,255,255,.03)),
-                linear-gradient(45deg, rgba(255,255,255,.03) 25%, transparent 25%, transparent 75%, rgba(255,255,255,.03) 75%, rgba(255,255,255,.03));
-            background-size: 8px 8px;
-            background-position: 0 0, 4px 4px;
-            color: var(--light-text);
-            padding: 2rem 0;
-            text-align: center;
-            position: relative;
-            z-index: 10;
-            box-shadow: 0 -15px 30px rgba(0, 0, 0, 0.4);
-            margin-top: 30px;
-        }
-
-        .footer-gradient {
-            position: absolute;
-            top: -30px;
-            left: 0;
-            right: 0;
-            height: 30px;
-            background-image: linear-gradient(to top, rgba(0,0,0,0.25), rgba(0,0,0,0));
-            z-index: 5;
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 999;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.9);
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .modal-content {
-            position: relative;
-            width: 100%;
-            max-width: 800px;
-            max-height: 80vh;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: -40px;
-            right: 0;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-        }
-
-        @media (max-width: 768px) {
-            .hero {
-                grid-template-columns: 1fr;
-            }
-
-            .hero-image {
-                min-height: 350px;
-            }
-
-            .hero-text {
-                padding: 2rem;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
-                text-align: center;
-            }
-
-            .hero-contact {
-                text-align: center;
-            }
-
-            nav ul {
-                gap: 1rem;
-            }
-
-            .portfolio-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero h1 {
-                font-size: 1.75rem;
-            }
-
-            .section-title h2 {
-                font-size: 1.5rem;
-            }
-
-            .portfolio-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="hero">
-                <div class="hero-image">
-                    <img src="/api/placeholder/800/800" alt="Jesse Hsu headshot">
+    <header style="background-color: #222; background-image: linear-gradient(45deg, rgba(255,255,255,.03) 25%, transparent 25%, transparent 75%, rgba(255,255,255,.03) 75%, rgba(255,255,255,.03)), linear-gradient(45deg, rgba(255,255,255,.03) 25%, transparent 25%, transparent 75%, rgba(255,255,255,.03) 75%, rgba(255,255,255,.03)); background-size: 8px 8px; background-position: 0 0, 4px 4px; color: #f8f8f8; position: relative; padding: 0; margin-bottom: 30px; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4); z-index: 10;">
+        <div style="width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <div style="display: grid; grid-template-columns: 1fr 2fr; min-height: 450px;">
+                <div style="height: 100%; overflow: hidden; border-radius: 0; border: none;">
+                    <img src="/api/placeholder/800/800" alt="Jesse Hsu headshot" style="width: 100%; height: 100%; object-fit: cover; border-radius: 0;">
                 </div>
-                <div class="hero-text">
-                    <h1><a href="#about" style="color: var(--light-text); text-decoration: none;">JESSE HSU</a></h1>
-                    <div class="hero-divider"></div>
-                    <div class="hero-contact">
-                        <p><a href="mailto:jessehsu@jessehsu.com">jessehsu@jessehsu.com</a></p>
-                        <p><a href="tel:+18135131385">(813) 513-1385</a></p>
-                        <p>Agent: Chaim Magnum, Lemon Lime Agency chaim@lemonlimeagency.com</p>
+                <div style="display: flex; flex-direction: column; justify-content: center; padding: 2rem 3rem;">
+                    <h1 style="font-size: 3.5rem; font-weight: 700; margin-bottom: 1rem; line-height: 1.1;">
+                        <a href="#about" style="color: #f8f8f8; text-decoration: none;">JESSE HSU</a>
+                    </h1>
+                    <div style="width: 100%; height: 2px; background-color: #e63946; margin-bottom: 1.5rem;"></div>
+                    <div style="font-size: 1.1rem; line-height: 1.6;">
+                        <p style="margin-bottom: 0.5rem;"><a href="mailto:jessehsu@jessehsu.com">jessehsu@jessehsu.com</a></p>
+                        <p style="margin-bottom: 0.5rem;"><a href="tel:+18135131385">(813) 513-1385</a></p>
+                        <p style="margin-bottom: 0.5rem;">Agent: Chaim Magnum, Lemon Lime Agency chaim@lemonlimeagency.com</p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="banner-gradient"></div>
+        <div style="position: absolute; bottom: -30px; left: 0; right: 0; height: 30px; background-image: linear-gradient(to bottom, rgba(0,0,0,0.25), rgba(0,0,0,0)); z-index: 5;"></div>
     </header>
 
     <div style="height: 30px; background-color: transparent;"></div>
 
-    <main class="container">
-        <section id="portfolio">
-            <div class="section-title" style="text-align: left;">
-                <h2>Commercial Portfolio</h2>
+    <main style="width: 100%; max-width: 1200px; margin: 0 auto; padding: 3rem 20px; position: relative; z-index: 1; margin-top: 20px; background-color: white;">
+        <section id="portfolio" style="margin-bottom: 4rem;">
+            <div style="text-align: left; margin-bottom: 2rem; position: relative;">
+                <h2 style="font-size: 2rem; display: inline-block; padding-bottom: 0.5rem; border-bottom: 3px solid #e63946;">Commercial Portfolio</h2>
             </div>
             <p>Browse through my latest commercial work across different brands and industries.</p>
 
-            <div class="portfolio-grid">
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; margin-top: 2rem;">
                 <!-- Portfolio Item 1 -->
-                <div class="portfolio-item">
-                    <div class="video-container">
-                        <div class="video-placeholder">
-                            <div class="video-play-button"></div>
+                <div style="background-color: #f8f8f8; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s;">
+                    <div style="position: relative; width: 100%; padding-top: 56.25%; background-color: #000; cursor: pointer; overflow: hidden;">
+                        <video style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease;" muted loop>
+                            <source src="path/to/video1.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background-color: rgba(230, 57, 70, 0.8); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: opacity 0.3s ease; z-index: 2;">
+                            <div style="width: 0; height: 0; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-left: 15px solid white; margin-left: 5px;"></div>
                         </div>
                     </div>
-                    <div class="portfolio-details">
-                        <h3>Brand Name Commercial</h3>
-                        <p>National TV campaign for a leading brand showcasing their new product line.</p>
+                    <div style="padding: 1.5rem;">
+                        <h3 style="margin-bottom: 0.5rem; font-size: 1.2rem;">Brand Name Commercial</h3>
+                        <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">National TV campaign for a leading brand showcasing their new product line.</p>
                     </div>
                 </div>
 
                 <!-- Portfolio Item 2 -->
-                <div class="portfolio-item">
-                    <div class="video-container">
-                        <div class="video-placeholder">
-                            <div class="video-play-button"></div>
+                <div style="background-color: #f8f8f8; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s;">
+                    <div style="position: relative; width: 100%; padding-top: 56.25%; background-color: #000; cursor: pointer; overflow: hidden;">
+                        <video style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease;" muted loop>
+                            <source src="path/to/video2.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background-color: rgba(230, 57, 70, 0.8); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: opacity 0.3s ease; z-index: 2;">
+                            <div style="width: 0; height: 0; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-left: 15px solid white; margin-left: 5px;"></div>
                         </div>
                     </div>
-                    <div class="portfolio-details">
-                        <h3>Food & Beverage Ad</h3>
-                        <p>30-second spot for a popular food chain highlighting their new menu items.</p>
+                    <div style="padding: 1.5rem;">
+                        <h3 style="margin-bottom: 0.5rem; font-size: 1.2rem;">Food & Beverage Ad</h3>
+                        <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">30-second spot for a popular food chain highlighting their new menu items.</p>
                     </div>
                 </div>
 
                 <!-- Portfolio Item 3 -->
-                <div class="portfolio-item">
-                    <div class="video-container">
-                        <div class="video-placeholder">
-                            <div class="video-play-button"></div>
+                <div style="background-color: #f8f8f8; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.3s, box-shadow 0.3s;">
+                    <div style="position: relative; width: 100%; padding-top: 56.25%; background-color: #000; cursor: pointer; overflow: hidden;">
+                        <video style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.3s ease;" muted loop>
+                            <source src="path/to/video3.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background-color: rgba(230, 57, 70, 0.8); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: opacity 0.3s ease; z-index: 2;">
+                            <div style="width: 0; height: 0; border-top: 10px solid transparent; border-bottom: 10px solid transparent; border-left: 15px solid white; margin-left: 5px;"></div>
                         </div>
                     </div>
-                    <div class="portfolio-details">
-                        <h3>Tech Product Launch</h3>
-                        <p>Digital campaign for a technology company's flagship product release.</p>
+                    <div style="padding: 1.5rem;">
+                        <h3 style="margin-bottom: 0.5rem; font-size: 1.2rem;">Tech Product Launch</h3>
+                        <p style="color: #666; font-size: 0.9rem; margin-bottom: 1rem;">Digital campaign for a technology company's flagship product release.</p>
                     </div>
                 </div>
 
-                <!-- Portfolio Item 4 -->
-                <div class="portfolio-item">
-                    <div class="video-container">
-                        <div class="video-placeholder">
-                            <div class="video-play-button"></div>
-                        </div>
-                    </div>
-                    <div class="portfolio-details">
-                        <h3>Healthcare Campaign</h3>
-                        <p>Educational series promoting awareness for a healthcare initiative.</p>
-                    </div>
-                </div>
-
-                <!-- Portfolio Item 5 -->
-                <div class="portfolio-item">
-                    <div class="video-container">
-                        <div class="video-placeholder">
-                            <div class="video-play-button"></div>
-                        </div>
-                    </div>
-                    <div class="portfolio-details">
-                        <h3>Lifestyle Brand Promotion</h3>
-                        <p>Series of shorts for a lifestyle brand's seasonal collection.</p>
-                    </div>
-                </div>
-
-                <!-- Portfolio Item 6 -->
-                <div class="portfolio-item">
-                    <div class="video-container">
-                        <div class="video-placeholder">
-                            <div class="video-play-button"></div>
-                        </div>
-                    </div>
-                    <div class="portfolio-details">
-                        <h3>Holiday Season Special</h3>
-                        <p>Festive commercial for a retail chain's holiday promotions.</p>
-                    </div>
-                </div>
+                <!-- Add other portfolio items similarly -->
             </div>
         </section>
 
-        <section id="about">
-            <div class="section-title" style="text-align: left;">
-                <h2>About Me</h2>
+        <section id="about" style="margin-bottom: 4rem;">
+            <div style="text-align: left; margin-bottom: 2rem; position: relative;">
+                <h2 style="font-size: 2rem; display: inline-block; padding-bottom: 0.5rem; border-bottom: 3px solid #e63946;">About Me</h2>
             </div>
-
-            <div class="about-content">
-                <div class="about-text" style="flex: 1; min-width: 100%;">
+            <div style="display: flex; gap: 2rem; align-items: center; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 100%;">
                     <p>Jesse began his career in New York where he studied with UCB and after moving to Los Angeles a few years ago, he has booked 12 commercials from 2020-2022 and 10 in 2024. He has taken commercial technique courses with AHC, Killian's and voiceover classes at Real Voice LA and has a commercial voice demo.</p>
-		    <br>
+                    <br>
                     <p>In 2022, he was a guest star in a web series, Millie & Maddie and also starred in his first feature film, "Starring Jerry As Himself" which premiered at the 2022 Slamdance Film Festival and is now available to stream on Amazon Prime Video and Apple TV+.</p>
                 </div>
             </div>
@@ -500,72 +109,76 @@
 
     <div style="height: 30px; background-color: transparent;"></div>
 
-    <footer>
-        <div class="footer-gradient"></div>
-        <div class="container">
-            <p>&copy; 2025 Jesse Hsu. All Rights Reserved.</p>
+    <footer style="background-color: #222; background-image: linear-gradient(45deg, rgba(255,255,255,.03) 25%, transparent 25%, transparent 75%, rgba(255,255,255,.03) 75%, rgba(255,255,255,.03)), linear-gradient(45deg, rgba(255,255,255,.03) 25%, transparent 25%, transparent 75%, rgba(255,255,255,.03) 75%, rgba(255,255,255,.03)); background-size: 8px 8px; background-position: 0 0, 4px 4px; color: #f8f8f8; padding: 2rem 0; text-align: center; position: relative; z-index: 10; box-shadow: 0 -15px 30px rgba(0, 0, 0, 0.4); margin-top: 30px;">
+        <div style="position: absolute; top: -30px; left: 0; right: 0; height: 30px; background-image: linear-gradient(to top, rgba(0,0,0,0.25), rgba(0,0,0,0)); z-index: 5;"></div>
+        <div style="width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <p>© 2025 Jesse Hsu. All Rights Reserved.</p>
         </div>
     </footer>
 
-    <!-- Video Modal -->
-    <div class="modal" id="videoModal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
+    <div id="videoModal" style="display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); align-items: center; justify-content: center; padding: 20px;">
+        <div style="position: relative; width: 100%; max-width: 800px; max-height: 80vh;">
+            <span style="position: absolute; top: -40px; right: 0; color: white; font-size: 2rem; cursor: pointer;">×</span>
             <div id="videoPlayer"></div>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Handle video placeholder clicks
-            const videoPlaceholders = document.querySelectorAll('.video-placeholder');
-            const modal = document.getElementById('videoModal');
-            const closeModal = document.querySelector('.close-modal');
-            const videoPlayer = document.getElementById('videoPlayer');
+    document.addEventListener('DOMContentLoaded', function() {
+        const portfolioItems = document.querySelectorAll('div[style*="background-color: #f8f8f8; border-radius: 8px"]');
+        const modal = document.getElementById('videoModal');
+        const closeModal = document.querySelector('span[style*="position: absolute; top: -40px"]');
+        const videoPlayer = document.getElementById('videoPlayer');
 
-            videoPlaceholders.forEach(placeholder => {
-                placeholder.addEventListener('click', function() {
-                    // In a real implementation, you would dynamically create a video element
-                    // and set its source to the actual video file
-                    videoPlayer.innerHTML = `
-                        <div style="padding-top: 56.25%; background: #000; position: relative;">
-                            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem;">
-                                Video would play here
-                            </div>
-                        </div>
-                    `;
-
-                    modal.style.display = 'flex';
-                });
-
-            // Smooth scrolling for Jesse Hsu name link
-            document.querySelector('.hero-text h1 a').addEventListener('click', function(e) {
-                e.preventDefault();
-
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-
-                window.scrollTo({
-                    top: targetElement.offsetTop + 700,
-                    behavior: 'smooth'
-                });
+        portfolioItems.forEach(item => {
+            const video = item.querySelector('video');
+            
+            item.addEventListener('mouseenter', function() {
+                video.style.opacity = '1';
+                video.play();
             });
+            
+            item.addEventListener('mouseleave', function() {
+                video.style.opacity = '0';
+                video.pause();
+                video.currentTime = 0;
             });
 
-            // Close modal
-            closeModal.addEventListener('click', function() {
-                modal.style.display = 'none';
-                videoPlayer.innerHTML = '';
-            });
-
-            // Close modal when clicking outside content
-            window.addEventListener('click', function(event) {
-                if (event.target === modal) {
-                    modal.style.display = 'none';
-                    videoPlayer.innerHTML = '';
-                }
+            item.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const videoSrc = video.querySelector('source').src;
+                videoPlayer.innerHTML = `
+                    <video controls autoplay style="width: 100%; max-height: 100%;">
+                        <source src="${videoSrc}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                `;
+                modal.style.display = 'flex';
             });
         });
+
+        document.querySelector('h1 a').addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            window.scrollTo({
+                top: targetElement.offsetTop + 700,
+                behavior: 'smooth'
+            });
+        });
+
+        closeModal.addEventListener('click', function() {
+            modal.style.display = 'none';
+            videoPlayer.innerHTML = '';
+        });
+
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+                videoPlayer.innerHTML = '';
+            }
+        });
+    });
     </script>
 </body>
 </html>
