@@ -508,17 +508,17 @@
 
                 <!-- Portfolio Item 6 -->
                 <div class="portfolio-item">
-                    <div class="video-container" data-video="holiday">
-                        <video class="video-preview" loop muted preload="none" poster="/api/placeholder/400/225">
-                            <source src="#" type="video/mp4">
+                    <div class="video-container" data-video="ezcater">
+                        <video class="video-preview" loop muted preload="auto" poster="/api/placeholder/400/225">
+                            <source src="https://acting.jessehsu.com/videos/ezcater.mp4" type="video/mp4">
                         </video>
                         <div class="video-placeholder">
                             <div class="video-play-button"></div>
                         </div>
                     </div>
                     <div class="portfolio-details">
-                        <h3>Holiday Season Special</h3>
-                        <p>Festive commercial for a retail chain's holiday promotions.</p>
+                        <h3>EZCater: Consideration</h3>
+                        <p>JP Bolles</p>
                     </div>
                 </div>
             </div>
@@ -583,8 +583,8 @@
                     case 'amazon-tnf':
                         videoPreview.poster = "/api/placeholder/400/225?text=Amazon TNF";
                         break;
-                    case 'holiday':
-                        videoPreview.poster = "/api/placeholder/400/225?text=Holiday";
+                    case 'ezcater':
+                        videoPreview.poster = "/api/placeholder/400/225?text=EZCater";
                         break;
                     default:
                         videoPreview.poster = "/api/placeholder/400/225";
@@ -594,7 +594,7 @@
                 container.addEventListener('mouseenter', function() {
                     // In a real implementation, this would be the actual video source
                     // For videos with actual sources, we use them directly
-                    if (videoId === 'rbc-apple' || videoId === 'google-pixel' || videoId === 'les-mills' || videoId === 'sofi-money' || videoId === 'amazon-tnf') {
+                    if (videoId === 'rbc-apple' || videoId === 'google-pixel' || videoId === 'les-mills' || videoId === 'sofi-money' || videoId === 'amazon-tnf' || videoId === 'ezcater') {
                         // The source is already set in the HTML
                         videoPreview.load();
                         videoPreview.play().catch(e => {
@@ -665,6 +665,14 @@
                         videoPlayer.innerHTML = `
                             <video width="100%" controls autoplay>
                                 <source src="https://acting.jessehsu.com/videos/amazon_tnf.mp4" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        `;
+                    } else if (videoId === 'ezcater') {
+                        // Use the actual video for EZCater
+                        videoPlayer.innerHTML = `
+                            <video width="100%" controls autoplay>
+                                <source src="https://acting.jessehsu.com/videos/ezcater.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
                         `;
