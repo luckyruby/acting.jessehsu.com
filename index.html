@@ -188,6 +188,7 @@
             padding-top: 56.25%; /* 16:9 Aspect Ratio */
             background-color: #000;
             cursor: pointer;
+            overflow: hidden;
         }
 
         .video-placeholder {
@@ -201,6 +202,7 @@
             justify-content: center;
             background-color: #1a1a1a;
             color: white;
+            transition: opacity 0.3s ease;
         }
 
         .video-play-button {
@@ -212,6 +214,7 @@
             align-items: center;
             justify-content: center;
             transition: background-color 0.3s;
+            z-index: 2;
         }
 
         .video-play-button:hover {
@@ -227,6 +230,26 @@
             border-bottom: 10px solid transparent;
             border-left: 15px solid white;
             margin-left: 5px;
+        }
+        
+        .video-preview {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+        }
+        
+        .video-container:hover .video-preview {
+            opacity: 1;
+        }
+        
+        .video-container:hover .video-placeholder {
+            opacity: 0.5;
         }
 
         .portfolio-details {
@@ -405,7 +428,10 @@
             <div class="portfolio-grid">
                 <!-- Portfolio Item 1 -->
                 <div class="portfolio-item">
-                    <div class="video-container">
+                    <div class="video-container" data-video="brand-commercial">
+                        <video class="video-preview" loop muted preload="none" poster="/api/placeholder/400/225">
+                            <source src="#" type="video/mp4">
+                        </video>
                         <div class="video-placeholder">
                             <div class="video-play-button"></div>
                         </div>
@@ -418,7 +444,10 @@
 
                 <!-- Portfolio Item 2 -->
                 <div class="portfolio-item">
-                    <div class="video-container">
+                    <div class="video-container" data-video="food-beverage">
+                        <video class="video-preview" loop muted preload="none" poster="/api/placeholder/400/225">
+                            <source src="#" type="video/mp4">
+                        </video>
                         <div class="video-placeholder">
                             <div class="video-play-button"></div>
                         </div>
@@ -431,7 +460,10 @@
 
                 <!-- Portfolio Item 3 -->
                 <div class="portfolio-item">
-                    <div class="video-container">
+                    <div class="video-container" data-video="tech-launch">
+                        <video class="video-preview" loop muted preload="none" poster="/api/placeholder/400/225">
+                            <source src="#" type="video/mp4">
+                        </video>
                         <div class="video-placeholder">
                             <div class="video-play-button"></div>
                         </div>
@@ -444,7 +476,10 @@
 
                 <!-- Portfolio Item 4 -->
                 <div class="portfolio-item">
-                    <div class="video-container">
+                    <div class="video-container" data-video="healthcare">
+                        <video class="video-preview" loop muted preload="none" poster="/api/placeholder/400/225">
+                            <source src="#" type="video/mp4">
+                        </video>
                         <div class="video-placeholder">
                             <div class="video-play-button"></div>
                         </div>
@@ -457,7 +492,10 @@
 
                 <!-- Portfolio Item 5 -->
                 <div class="portfolio-item">
-                    <div class="video-container">
+                    <div class="video-container" data-video="lifestyle">
+                        <video class="video-preview" loop muted preload="none" poster="/api/placeholder/400/225">
+                            <source src="#" type="video/mp4">
+                        </video>
                         <div class="video-placeholder">
                             <div class="video-play-button"></div>
                         </div>
@@ -470,7 +508,10 @@
 
                 <!-- Portfolio Item 6 -->
                 <div class="portfolio-item">
-                    <div class="video-container">
+                    <div class="video-container" data-video="holiday">
+                        <video class="video-preview" loop muted preload="none" poster="/api/placeholder/400/225">
+                            <source src="#" type="video/mp4">
+                        </video>
                         <div class="video-placeholder">
                             <div class="video-play-button"></div>
                         </div>
@@ -517,26 +558,79 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Handle video placeholder clicks
-            const videoPlaceholders = document.querySelectorAll('.video-placeholder');
+            // Video preview on hover functionality
+            const videoContainers = document.querySelectorAll('.video-container');
+            
+            videoContainers.forEach(container => {
+                const videoPreview = container.querySelector('.video-preview');
+                const videoId = container.getAttribute('data-video');
+                
+                // In a real implementation, you would set the actual video source here
+                // For demo purposes, we're using placeholder videos
+                switch(videoId) {
+                    case 'brand-commercial':
+                        videoPreview.poster = "/api/placeholder/400/225?text=Brand Commercial";
+                        break;
+                    case 'food-beverage':
+                        videoPreview.poster = "/api/placeholder/400/225?text=Food & Beverage";
+                        break;
+                    case 'tech-launch':
+                        videoPreview.poster = "/api/placeholder/400/225?text=Tech Launch";
+                        break;
+                    case 'healthcare':
+                        videoPreview.poster = "/api/placeholder/400/225?text=Healthcare";
+                        break;
+                    case 'lifestyle':
+                        videoPreview.poster = "/api/placeholder/400/225?text=Lifestyle";
+                        break;
+                    case 'holiday':
+                        videoPreview.poster = "/api/placeholder/400/225?text=Holiday";
+                        break;
+                    default:
+                        videoPreview.poster = "/api/placeholder/400/225";
+                }
+                
+                // Auto-play preview on hover
+                container.addEventListener('mouseenter', function() {
+                    // In a real implementation, this would be the actual video source
+                    // For demo purposes, we're just showing it's working by setting the video to play
+                    videoPreview.src = "#"; // This would be a real video URL in production
+                    videoPreview.load();
+                    videoPreview.play().catch(e => {
+                        console.log("Auto-play prevented:", e);
+                        // Many browsers prevent autoplay without user interaction
+                        // This is just a fallback for the demo
+                    });
+                });
+                
+                container.addEventListener('mouseleave', function() {
+                    videoPreview.pause();
+                    videoPreview.currentTime = 0;
+                });
+            });
+
+            // Handle video placeholder clicks for the full video modal
             const modal = document.getElementById('videoModal');
             const closeModal = document.querySelector('.close-modal');
             const videoPlayer = document.getElementById('videoPlayer');
 
-            videoPlaceholders.forEach(placeholder => {
-                placeholder.addEventListener('click', function() {
+            videoContainers.forEach(container => {
+                container.addEventListener('click', function() {
+                    const videoId = this.getAttribute('data-video');
+                    
                     // In a real implementation, you would dynamically create a video element
-                    // and set its source to the actual video file
+                    // and set its source to the actual video file based on videoId
                     videoPlayer.innerHTML = `
                         <div style="padding-top: 56.25%; background: #000; position: relative;">
                             <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem;">
-                                Video would play here
+                                ${videoId.replace('-', ' ')} video would play here
                             </div>
                         </div>
                     `;
 
                     modal.style.display = 'flex';
                 });
+            });
 
             // Smooth scrolling for Jesse Hsu name link
             document.querySelector('.hero-text h1 a').addEventListener('click', function(e) {
@@ -549,7 +643,6 @@
                     top: targetElement.offsetTop + 700,
                     behavior: 'smooth'
                 });
-            });
             });
 
             // Close modal
