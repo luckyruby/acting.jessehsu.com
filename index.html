@@ -610,87 +610,19 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Video preview on hover functionality
+            // Modal functionality
             const videoContainers = document.querySelectorAll('.video-container');
-            
-            videoContainers.forEach(container => {
-                const videoPreview = container.querySelector('.video-preview');
-                const videoId = container.getAttribute('data-video');
-                
-                // In a real implementation, you would set the actual video source here
-                // For demo purposes, we're using placeholder videos
-                switch(videoId) {
-                    case 'rbc-apple':
-                        videoPreview.poster = "/api/placeholder/400/225?text=RBC x Apple";
-                        break;
-                    case 'google-pixel':
-                        videoPreview.poster = "/api/placeholder/400/225?text=Google Pixel";
-                        break;
-                    case 'les-mills':
-                        videoPreview.poster = "/api/placeholder/400/225?text=Les Mills";
-                        break;
-                    case 'sofi-money':
-                        videoPreview.poster = "/api/placeholder/400/225?text=Sofi Money";
-                        break;
-                    case 'amazon-tnf':
-                        videoPreview.poster = "/api/placeholder/400/225?text=Amazon TNF";
-                        break;
-                    case 'ezcater':
-                        videoPreview.poster = "/api/placeholder/400/225?text=EZCater";
-                        break;
-                    case 'realtor':
-                        videoPreview.poster = "/api/placeholder/400/225?text=Realtor.com";
-                        break;
-                    case 'hims':
-                        videoPreview.poster = "/api/placeholder/400/225?text=HIMS";
-                        break;
-                    case 'mattress-firm':
-                        videoPreview.poster = "/api/placeholder/400/225?text=Mattress Firm";
-                        break;
-                    default:
-                        videoPreview.poster = "/api/placeholder/400/225";
-                }
-                
-                // Auto-play preview on hover
-                container.addEventListener('mouseenter', function() {
-                    // In a real implementation, this would be the actual video source
-                    // For videos with actual sources, we use them directly
-                    if (videoId === 'rbc-apple' || videoId === 'google-pixel' || videoId === 'les-mills' || videoId === 'sofi-money' || videoId === 'amazon-tnf' || videoId === 'ezcater' || videoId === 'realtor' || videoId === 'hims' || videoId === 'mattress-firm') {
-                        // The source is already set in the HTML
-                        videoPreview.load();
-                        videoPreview.play().catch(e => {
-                            console.log("Auto-play prevented:", e);
-                        });
-                    } else {
-                        // For other videos, we're using placeholders
-                        videoPreview.src = "#"; // This would be a real video URL in production
-                        videoPreview.load();
-                        videoPreview.play().catch(e => {
-                            console.log("Auto-play prevented:", e);
-                            // Many browsers prevent autoplay without user interaction
-                            // This is just a fallback for the demo
-                        });
-                    }
-                });
-                
-                container.addEventListener('mouseleave', function() {
-                    videoPreview.pause();
-                    videoPreview.currentTime = 0;
-                });
-            });
-
-            // Handle video placeholder clicks for the full video modal
             const modal = document.getElementById('videoModal');
             const closeModal = document.querySelector('.close-modal');
             const videoPlayer = document.getElementById('videoPlayer');
-
+            
+            // Click event for video thumbnails to open modal
             videoContainers.forEach(container => {
                 container.addEventListener('click', function() {
                     const videoId = this.getAttribute('data-video');
                     
                     // Create video content for the modal
                     if (videoId === 'rbc-apple') {
-                        // Use the actual video for RBC x Apple
                         videoPlayer.innerHTML = `
                             <video width="100%" controls autoplay>
                                 <source src="https://acting.jessehsu.com/videos/rbc_airpods.mp4" type="video/mp4">
@@ -698,7 +630,6 @@
                             </video>
                         `;
                     } else if (videoId === 'google-pixel') {
-                        // Use the actual video for Google Pixel
                         videoPlayer.innerHTML = `
                             <video width="100%" controls autoplay>
                                 <source src="https://acting.jessehsu.com/videos/teampixel.mp4" type="video/mp4">
@@ -706,7 +637,6 @@
                             </video>
                         `;
                     } else if (videoId === 'les-mills') {
-                        // Use the actual video for Les Mills
                         videoPlayer.innerHTML = `
                             <video width="100%" controls autoplay>
                                 <source src="https://acting.jessehsu.com/videos/les_mills_ceremony.mp4" type="video/mp4">
@@ -714,7 +644,6 @@
                             </video>
                         `;
                     } else if (videoId === 'sofi-money') {
-                        // Use the actual video for Sofi Money Moves
                         videoPlayer.innerHTML = `
                             <video width="100%" controls autoplay>
                                 <source src="https://acting.jessehsu.com/videos/sofi_money_moves.mov" type="video/quicktime">
@@ -722,7 +651,6 @@
                             </video>
                         `;
                     } else if (videoId === 'amazon-tnf') {
-                        // Use the actual video for Amazon TNF
                         videoPlayer.innerHTML = `
                             <video width="100%" controls autoplay>
                                 <source src="https://acting.jessehsu.com/videos/amazon_tnf.mp4" type="video/mp4">
@@ -730,7 +658,6 @@
                             </video>
                         `;
                     } else if (videoId === 'ezcater') {
-                        // Use the actual video for EZCater
                         videoPlayer.innerHTML = `
                             <video width="100%" controls autoplay>
                                 <source src="https://acting.jessehsu.com/videos/ezcater.mp4" type="video/mp4">
@@ -738,7 +665,6 @@
                             </video>
                         `;
                     } else if (videoId === 'realtor') {
-                        // Use the actual video for Realtor.com
                         videoPlayer.innerHTML = `
                             <video width="100%" controls autoplay>
                                 <source src="https://acting.jessehsu.com/videos/so_many_houses_realtor_com.mov" type="video/quicktime">
@@ -746,7 +672,6 @@
                             </video>
                         `;
                     } else if (videoId === 'hims') {
-                        // Use the actual video for HIMS
                         videoPlayer.innerHTML = `
                             <video width="100%" controls autoplay>
                                 <source src="https://acting.jessehsu.com/videos/hims.mov" type="video/quicktime">
@@ -754,7 +679,6 @@
                             </video>
                         `;
                     } else if (videoId === 'mattress-firm') {
-                        // Use the actual video for Mattress Firm
                         videoPlayer.innerHTML = `
                             <video width="100%" controls autoplay>
                                 <source src="https://acting.jessehsu.com/videos/mattress.mov" type="video/quicktime">
@@ -762,7 +686,6 @@
                             </video>
                         `;
                     } else {
-                        // Placeholder for other videos
                         videoPlayer.innerHTML = `
                             <div style="padding-top: 56.25%; background: #000; position: relative;">
                                 <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem;">
