@@ -624,76 +624,98 @@
             const closeModal = document.querySelector('.close-modal');
             const videoPlayer = document.getElementById('videoPlayer');
             
-            // Click event for video thumbnails to open modal
+            // Function to check if device is mobile
+            function isMobileDevice() {
+                return (window.innerWidth <= 768);
+            }
+            
+            // Function to create inline video element
+            function createInlineVideo(container, videoSrc, videoType) {
+                // Remove existing content
+                const placeholder = container.querySelector('.video-placeholder');
+                container.removeChild(placeholder);
+                
+                // Create video element
+                const video = document.createElement('video');
+                video.setAttribute('controls', '');
+                video.setAttribute('width', '100%');
+                video.style.position = 'absolute';
+                video.style.top = '0';
+                video.style.left = '0';
+                video.style.width = '100%';
+                video.style.height = '100%';
+                
+                // Create source element
+                const source = document.createElement('source');
+                source.src = videoSrc;
+                source.type = videoType;
+                
+                // Add source to video
+                video.appendChild(source);
+                
+                // Add fallback text
+                video.innerHTML += 'Your browser does not support the video tag.';
+                
+                // Add video to container
+                container.appendChild(video);
+                
+                // Play the video
+                video.play().catch(e => console.log("Autoplay prevented:", e));
+            }
+            
+            // Handle video container clicks
             videoContainers.forEach(container => {
                 container.addEventListener('click', function() {
                     const videoId = this.getAttribute('data-video');
+                    let videoSrc = '';
+                    let videoType = '';
                     
-                    // Create video content for the modal
+                    // Determine video source and type
                     if (videoId === 'rbc-apple') {
-                        videoPlayer.innerHTML = `
-                            <video width="100%" controls autoplay>
-                                <source src="https://acting.jessehsu.com/videos/rbc_airpods.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        `;
+                        videoSrc = 'https://acting.jessehsu.com/videos/rbc_airpods.mp4';
+                        videoType = 'video/mp4';
                     } else if (videoId === 'google-pixel') {
-                        videoPlayer.innerHTML = `
-                            <video width="100%" controls autoplay>
-                                <source src="https://acting.jessehsu.com/videos/teampixel.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        `;
+                        videoSrc = 'https://acting.jessehsu.com/videos/teampixel.mp4';
+                        videoType = 'video/mp4';
                     } else if (videoId === 'les-mills') {
-                        videoPlayer.innerHTML = `
-                            <video width="100%" controls autoplay>
-                                <source src="https://acting.jessehsu.com/videos/les_mills_ceremony.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        `;
+                        videoSrc = 'https://acting.jessehsu.com/videos/les_mills_ceremony.mp4';
+                        videoType = 'video/mp4';
                     } else if (videoId === 'sofi-money') {
-                        videoPlayer.innerHTML = `
-                            <video width="100%" controls autoplay>
-                                <source src="https://acting.jessehsu.com/videos/sofi_money_moves.mov" type="video/quicktime">
-                                Your browser does not support the video tag.
-                            </video>
-                        `;
+                        videoSrc = 'https://acting.jessehsu.com/videos/sofi_money_moves.mov';
+                        videoType = 'video/quicktime';
                     } else if (videoId === 'amazon-tnf') {
-                        videoPlayer.innerHTML = `
-                            <video width="100%" controls autoplay>
-                                <source src="https://acting.jessehsu.com/videos/amazon_tnf.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        `;
+                        videoSrc = 'https://acting.jessehsu.com/videos/amazon_tnf.mp4';
+                        videoType = 'video/mp4';
                     } else if (videoId === 'ezcater') {
-                        videoPlayer.innerHTML = `
-                            <video width="100%" controls autoplay>
-                                <source src="https://acting.jessehsu.com/videos/ezcater.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        `;
+                        videoSrc = 'https://acting.jessehsu.com/videos/ezcater.mp4';
+                        videoType = 'video/mp4';
                     } else if (videoId === 'realtor') {
-                        videoPlayer.innerHTML = `
-                            <video width="100%" controls autoplay>
-                                <source src="https://acting.jessehsu.com/videos/so_many_houses_realtor_com.mov" type="video/quicktime">
-                                Your browser does not support the video tag.
-                            </video>
-                        `;
+                        videoSrc = 'https://acting.jessehsu.com/videos/so_many_houses_realtor_com.mov';
+                        videoType = 'video/quicktime';
                     } else if (videoId === 'hims') {
-                        videoPlayer.innerHTML = `
-                            <video width="100%" controls autoplay>
-                                <source src="https://acting.jessehsu.com/videos/hims.mov" type="video/quicktime">
-                                Your browser does not support the video tag.
-                            </video>
-                        `;
+                        videoSrc = 'https://acting.jessehsu.com/videos/hims.mov';
+                        videoType = 'video/quicktime';
                     } else if (videoId === 'mattress-firm') {
+                        videoSrc = 'https://acting.jessehsu.com/videos/mattress.mov';
+                        videoType = 'video/quicktime';
+                    }
+                    
+                    // On mobile, play video inline
+                    if (isMobileDevice() && videoSrc) {
+                        createInlineVideo(this, videoSrc, videoType);
+                    }
+                    // On desktop, use modal
+                    else if (videoSrc) {
                         videoPlayer.innerHTML = `
                             <video width="100%" controls autoplay>
-                                <source src="https://acting.jessehsu.com/videos/mattress.mov" type="video/quicktime">
+                                <source src="${videoSrc}" type="${videoType}">
                                 Your browser does not support the video tag.
                             </video>
                         `;
-                    } else {
+                        modal.style.display = 'flex';
+                    }
+                    // Fallback for missing videos
+                    else {
                         videoPlayer.innerHTML = `
                             <div style="padding-top: 56.25%; background: #000; position: relative;">
                                 <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem;">
@@ -701,9 +723,8 @@
                                 </div>
                             </div>
                         `;
+                        modal.style.display = 'flex';
                     }
-
-                    modal.style.display = 'flex';
                 });
             });
 
@@ -731,6 +752,15 @@
                 if (event.target === modal) {
                     modal.style.display = 'none';
                     videoPlayer.innerHTML = '';
+                }
+            });
+            
+            // Handle resize events
+            window.addEventListener('resize', function() {
+                // If user switches from mobile to desktop view, reload the page
+                // This ensures the thumbnails are properly displayed
+                if (!isMobileDevice() && document.querySelector('.video-container video')) {
+                    location.reload();
                 }
             });
         });
