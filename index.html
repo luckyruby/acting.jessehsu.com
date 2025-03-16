@@ -492,17 +492,17 @@
 
                 <!-- Portfolio Item 5 -->
                 <div class="portfolio-item">
-                    <div class="video-container" data-video="lifestyle">
-                        <video class="video-preview" loop muted preload="none" poster="/api/placeholder/400/225">
-                            <source src="#" type="video/mp4">
+                    <div class="video-container" data-video="amazon-tnf">
+                        <video class="video-preview" loop muted preload="auto" poster="/api/placeholder/400/225">
+                            <source src="https://acting.jessehsu.com/videos/amazon_tnf.mp4" type="video/mp4">
                         </video>
                         <div class="video-placeholder">
                             <div class="video-play-button"></div>
                         </div>
                     </div>
                     <div class="portfolio-details">
-                        <h3>Lifestyle Brand Promotion</h3>
-                        <p>Series of shorts for a lifestyle brand's seasonal collection.</p>
+                        <h3>Amazon: TNF</h3>
+                        <p>Eric Wareheim</p>
                     </div>
                 </div>
 
@@ -580,8 +580,8 @@
                     case 'sofi-money':
                         videoPreview.poster = "/api/placeholder/400/225?text=Sofi Money";
                         break;
-                    case 'lifestyle':
-                        videoPreview.poster = "/api/placeholder/400/225?text=Lifestyle";
+                    case 'amazon-tnf':
+                        videoPreview.poster = "/api/placeholder/400/225?text=Amazon TNF";
                         break;
                     case 'holiday':
                         videoPreview.poster = "/api/placeholder/400/225?text=Holiday";
@@ -594,7 +594,7 @@
                 container.addEventListener('mouseenter', function() {
                     // In a real implementation, this would be the actual video source
                     // For videos with actual sources, we use them directly
-                    if (videoId === 'rbc-apple' || videoId === 'google-pixel' || videoId === 'les-mills' || videoId === 'sofi-money') {
+                    if (videoId === 'rbc-apple' || videoId === 'google-pixel' || videoId === 'les-mills' || videoId === 'sofi-money' || videoId === 'amazon-tnf') {
                         // The source is already set in the HTML
                         videoPreview.load();
                         videoPreview.play().catch(e => {
@@ -657,6 +657,14 @@
                         videoPlayer.innerHTML = `
                             <video width="100%" controls autoplay>
                                 <source src="https://acting.jessehsu.com/videos/sofi_money_moves.mov" type="video/quicktime">
+                                Your browser does not support the video tag.
+                            </video>
+                        `;
+                    } else if (videoId === 'amazon-tnf') {
+                        // Use the actual video for Amazon TNF
+                        videoPlayer.innerHTML = `
+                            <video width="100%" controls autoplay>
+                                <source src="https://acting.jessehsu.com/videos/amazon_tnf.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
                         `;
