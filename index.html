@@ -25,6 +25,9 @@
             color: var(--text-color);
             line-height: 1.6;
             background-color: #fff;
+            overflow-x: hidden;
+            width: 100%;
+            position: relative;
         }
 
         .container {
@@ -379,9 +382,13 @@
 
             .hero-image {
                 min-height: 350px;
-                margin-left: -20px;
-                margin-right: -20px;
-                width: calc(100% + 40px);
+                margin-left: 0;
+                margin-right: 0;
+                width: 100%;
+            }
+            
+            .container {
+                padding: 0;
             }
 
             .hero-text {
