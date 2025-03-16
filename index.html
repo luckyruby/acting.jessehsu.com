@@ -663,139 +663,83 @@
             
             // Function to play the easter egg video
             function playEasterEggVideo() {
-                if (isMobileDevice()) {
-                    // For mobile, open in a new window
-                    const newWindow = window.open('', '_blank');
-                    
-                    if (newWindow) {
-                        // Create minimal HTML document for the video
-                        newWindow.document.write(`
-                            <!DOCTYPE html>
-                            <html lang="en">
-                            <head>
-                                <meta charset="UTF-8">
-                                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-                                <title>Jesse Hsu - Behind the Scenes</title>
-                                <style>
-                                    body, html {
-                                        margin: 0;
-                                        padding: 0;
-                                        width: 100%;
-                                        height: 100%;
-                                        background-color: #000;
-                                        overflow: hidden;
-                                    }
-                                    #videoContainer {
-                                        position: absolute;
-                                        top: 0;
-                                        left: 0;
-                                        width: 100%;
-                                        height: 100%;
-                                        display: flex;
-                                        align-items: center;
-                                        justify-content: center;
-                                    }
-                                    video {
-                                        width: 100%;
-                                        height: 100%;
-                                        object-fit: contain;
-                                    }
-                                </style>
-                            </head>
-                            <body>
-                                <div id="videoContainer">
-                                    <video id="easterEggVideo" controls autoplay playsinline>
-                                        <source src="${easterEggVideoSrc}" type="video/mp4">
-                                        Your browser does not support the video tag.
-                                    </video>
-                                </div>
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', function() {
-                                        const video = document.getElementById('easterEggVideo');
-                                        
-                                        // Request fullscreen once the video can play
-                                        video.addEventListener('canplay', function() {
-                                            setTimeout(function() {
-                                                try {
-                                                    if (video.requestFullscreen) {
-                                                        video.requestFullscreen();
-                                                    } else if (video.webkitRequestFullscreen) {
-                                                        video.webkitRequestFullscreen();
-                                                    } else if (video.mozRequestFullScreen) {
-                                                        video.mozRequestFullScreen();
-                                                    } else if (video.msRequestFullscreen) {
-                                                        video.msRequestFullscreen();
-                                                    }
-                                                } catch(e) {
-                                                    console.log("Couldn't enter fullscreen:", e);
-                                                }
-                                            }, 100);
-                                        });
-                                        
-                                        // Force play (needed for some mobile browsers)
-                                        video.play().catch(e => console.log("Autoplay prevented, user may need to tap to play"));
-                                        
-                                        // Close the window when video ends
-                                        video.addEventListener('ended', function() {
-                                            window.close();
-                                        });
-                                    });
-                                </script>
-                            </body>
-                            </html>
-                        `);
-                        newWindow.document.close();
-                    } else {
-                        // Fallback if popup is blocked
-                        alert("Please enable popups to view the easter egg video!");
+                // Create a temporary fullscreen video element
+                const fullscreenContainer = document.createElement('div');
+                fullscreenContainer.id = 'fullscreen-video-container';
+                fullscreenContainer.style.position = 'fixed';
+                fullscreenContainer.style.top = '0';
+                fullscreenContainer.style.left = '0';
+                fullscreenContainer.style.width = '100%';
+                fullscreenContainer.style.height = '100%';
+                fullscreenContainer.style.backgroundColor = '#000';
+                fullscreenContainer.style.zIndex = '9999';
+                
+                const video = document.createElement('video');
+                video.style.width = '100%';
+                video.style.height = '100%';
+                video.style.objectFit = 'contain';
+                video.controls = true;
+                video.autoplay = true;
+                video.playsInline = true; // Important for iOS
+                
+                const source = document.createElement('source');
+                source.src = easterEggVideoSrc;
+                source.type = 'video/mp4';
+                
+                video.appendChild(source);
+                fullscreenContainer.appendChild(video);
+                
+                // Add close button
+                const closeButton = document.createElement('div');
+                closeButton.innerHTML = '×';
+                closeButton.style.position = 'absolute';
+                closeButton.style.top = '20px';
+                closeButton.style.right = '20px';
+                closeButton.style.color = '#fff';
+                closeButton.style.fontSize = '40px';
+                closeButton.style.cursor = 'pointer';
+                closeButton.style.zIndex = '10000';
+                closeButton.style.width = '50px';
+                closeButton.style.height = '50px';
+                closeButton.style.display = 'flex';
+                closeButton.style.alignItems = 'center';
+                closeButton.style.justifyContent = 'center';
+                closeButton.style.borderRadius = '50%';
+                closeButton.style.background = 'rgba(0,0,0,0.5)';
+                
+                closeButton.addEventListener('click', function() {
+                    // Exit fullscreen if we're in fullscreen mode
+                    if (document.fullscreenElement || 
+                        document.webkitFullscreenElement ||
+                        document.mozFullScreenElement ||
+                        document.msFullscreenElement) {
+                        if (document.exitFullscreen) {
+                            document.exitFullscreen();
+                        } else if (document.webkitExitFullscreen) {
+                            document.webkitExitFullscreen();
+                        } else if (document.mozCancelFullScreen) {
+                            document.mozCancelFullScreen();
+                        } else if (document.msExitFullscreen) {
+                            document.msExitFullscreen();
+                        }
                     }
-                } else {
-                    // Desktop version - use the existing fullscreen approach
-                    // Create a temporary fullscreen video element
-                    const fullscreenContainer = document.createElement('div');
-                    fullscreenContainer.id = 'fullscreen-video-container';
-                    fullscreenContainer.style.position = 'fixed';
-                    fullscreenContainer.style.top = '0';
-                    fullscreenContainer.style.left = '0';
-                    fullscreenContainer.style.width = '100%';
-                    fullscreenContainer.style.height = '100%';
-                    fullscreenContainer.style.backgroundColor = '#000';
-                    fullscreenContainer.style.zIndex = '9999';
                     
-                    const video = document.createElement('video');
-                    video.style.width = '100%';
-                    video.style.height = '100%';
-                    video.style.objectFit = 'contain';
-                    video.controls = true;
-                    video.autoplay = true;
-                    video.playsInline = true; // Important for iOS
-                    
-                    const source = document.createElement('source');
-                    source.src = easterEggVideoSrc;
-                    source.type = 'video/mp4';
-                    
-                    video.appendChild(source);
-                    fullscreenContainer.appendChild(video);
-                    
-                    // Add close button
-                    const closeButton = document.createElement('div');
-                    closeButton.innerHTML = '×';
-                    closeButton.style.position = 'absolute';
-                    closeButton.style.top = '20px';
-                    closeButton.style.right = '20px';
-                    closeButton.style.color = '#fff';
-                    closeButton.style.fontSize = '40px';
-                    closeButton.style.cursor = 'pointer';
-                    closeButton.style.zIndex = '10000';
-                    closeButton.style.width = '50px';
-                    closeButton.style.height = '50px';
-                    closeButton.style.display = 'flex';
-                    closeButton.style.alignItems = 'center';
-                    closeButton.style.justifyContent = 'center';
-                    closeButton.style.borderRadius = '50%';
-                    closeButton.style.background = 'rgba(0,0,0,0.5)';
-                    
-                    closeButton.addEventListener('click', function() {
+                    document.body.removeChild(fullscreenContainer);
+                });
+                
+                // Allow closing by pressing Escape key
+                const handleEscape = function(e) {
+                    if (e.key === 'Escape' && document.getElementById('fullscreen-video-container')) {
+                        document.body.removeChild(fullscreenContainer);
+                        document.removeEventListener('keydown', handleEscape);
+                    }
+                };
+                
+                document.addEventListener('keydown', handleEscape);
+                
+                // Also allow closing by tapping/clicking on the video container (but not the video itself)
+                fullscreenContainer.addEventListener('click', function(e) {
+                    if (e.target === fullscreenContainer) {
                         // Exit fullscreen if we're in fullscreen mode
                         if (document.fullscreenElement || 
                             document.webkitFullscreenElement ||
@@ -813,72 +757,53 @@
                         }
                         
                         document.body.removeChild(fullscreenContainer);
-                    });
-                    
-                    // Allow closing by pressing Escape key
-                    const handleEscape = function(e) {
-                        if (e.key === 'Escape' && document.getElementById('fullscreen-video-container')) {
-                            document.body.removeChild(fullscreenContainer);
-                            document.removeEventListener('keydown', handleEscape);
+                    }
+                });
+                
+                fullscreenContainer.appendChild(closeButton);
+                document.body.appendChild(fullscreenContainer);
+                
+                // Close when video ends
+                video.addEventListener('ended', function() {
+                    // Exit fullscreen if we're in fullscreen mode
+                    if (document.fullscreenElement || 
+                        document.webkitFullscreenElement ||
+                        document.mozFullScreenElement ||
+                        document.msFullscreenElement) {
+                        if (document.exitFullscreen) {
+                            document.exitFullscreen();
+                        } else if (document.webkitExitFullscreen) {
+                            document.webkitExitFullscreen();
+                        } else if (document.mozCancelFullScreen) {
+                            document.mozCancelFullScreen();
+                        } else if (document.msExitFullscreen) {
+                            document.msExitFullscreen();
                         }
-                    };
+                    }
                     
-                    document.addEventListener('keydown', handleEscape);
-                    
-                    // Also allow closing by clicking on the video container (but not the video itself)
-                    fullscreenContainer.addEventListener('click', function(e) {
-                        if (e.target === fullscreenContainer) {
-                            // Exit fullscreen if we're in fullscreen mode
-                            if (document.fullscreenElement || 
-                                document.webkitFullscreenElement ||
-                                document.mozFullScreenElement ||
-                                document.msFullscreenElement) {
-                                if (document.exitFullscreen) {
-                                    document.exitFullscreen();
-                                } else if (document.webkitExitFullscreen) {
-                                    document.webkitExitFullscreen();
-                                } else if (document.mozCancelFullScreen) {
-                                    document.mozCancelFullScreen();
-                                } else if (document.msExitFullscreen) {
-                                    document.msExitFullscreen();
-                                }
+                    if (document.getElementById('fullscreen-video-container')) {
+                        document.body.removeChild(fullscreenContainer);
+                    }
+                });
+                
+                // Ensure video starts playing before requesting fullscreen (important for mobile)
+                video.addEventListener('canplay', function() {
+                    // Wait a tiny bit to ensure video is ready
+                    setTimeout(function() {
+                        // Try to enter true fullscreen mode
+                        if (isMobileDevice()) {
+                            // On mobile, try the video element directly for better results
+                            if (video.requestFullscreen) {
+                                video.requestFullscreen().catch(e => console.log("Couldn't enter fullscreen:", e));
+                            } else if (video.webkitRequestFullscreen) {
+                                video.webkitRequestFullscreen().catch(e => console.log("Couldn't enter fullscreen:", e));
+                            } else if (video.mozRequestFullScreen) {
+                                video.mozRequestFullScreen().catch(e => console.log("Couldn't enter fullscreen:", e));
+                            } else if (video.msRequestFullscreen) {
+                                video.msRequestFullscreen().catch(e => console.log("Couldn't enter fullscreen:", e));
                             }
-                            
-                            document.body.removeChild(fullscreenContainer);
-                        }
-                    });
-                    
-                    fullscreenContainer.appendChild(closeButton);
-                    document.body.appendChild(fullscreenContainer);
-                    
-                    // Close when video ends
-                    video.addEventListener('ended', function() {
-                        // Exit fullscreen if we're in fullscreen mode
-                        if (document.fullscreenElement || 
-                            document.webkitFullscreenElement ||
-                            document.mozFullScreenElement ||
-                            document.msFullscreenElement) {
-                            if (document.exitFullscreen) {
-                                document.exitFullscreen();
-                            } else if (document.webkitExitFullscreen) {
-                                document.webkitExitFullscreen();
-                            } else if (document.mozCancelFullScreen) {
-                                document.mozCancelFullScreen();
-                            } else if (document.msExitFullscreen) {
-                                document.msExitFullscreen();
-                            }
-                        }
-                        
-                        if (document.getElementById('fullscreen-video-container')) {
-                            document.body.removeChild(fullscreenContainer);
-                        }
-                    });
-                    
-                    // Ensure video starts playing before requesting fullscreen
-                    video.addEventListener('canplay', function() {
-                        // Wait a tiny bit to ensure video is ready
-                        setTimeout(function() {
-                            // Try to enter true fullscreen mode
+                        } else {
+                            // On desktop, use the container for better visual appearance
                             if (fullscreenContainer.requestFullscreen) {
                                 fullscreenContainer.requestFullscreen().catch(e => console.log("Couldn't enter fullscreen:", e));
                             } else if (fullscreenContainer.webkitRequestFullscreen) {
@@ -888,12 +813,12 @@
                             } else if (fullscreenContainer.msRequestFullscreen) {
                                 fullscreenContainer.msRequestFullscreen().catch(e => console.log("Couldn't enter fullscreen:", e));
                             }
-                        }, 100);
-                    });
-                    
-                    // Force play (needed for some browsers)
-                    video.play().catch(e => console.log("Autoplay prevented, user may need to interact first:", e));
-                }
+                        }
+                    }, 100);
+                });
+                
+                // Force play (needed for some mobile browsers)
+                video.play().catch(e => console.log("Autoplay prevented, user may need to interact first:", e));
             }
             
             // Modal functionality
