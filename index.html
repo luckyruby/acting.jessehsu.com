@@ -617,7 +617,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Easter Egg functionality - simplified version
+            // Easter Egg functionality - using modal approach
             let tapCount = 0;
             let lastTap = 0;
             let keySequence = "";
@@ -640,7 +640,7 @@
                 
                 // Check if we've reached 7 taps
                 if (tapCount >= 7) {
-                    window.open(easterEggVideoSrc + "?autoplay=1", "_blank");
+                    playEasterEggVideo();
                     tapCount = 0;
                 }
             });
@@ -656,10 +656,30 @@
                 
                 // Check if sequence matches
                 if (keySequence === targetSequence) {
-                    window.open(easterEggVideoSrc + "?autoplay=1", "_blank");
+                    playEasterEggVideo();
                     keySequence = "";
                 }
             });
+            
+            // Function to play the easter egg video using the modal
+            function playEasterEggVideo() {
+                videoElement.src = easterEggVideoSrc;
+                videoPlayer.classList.add('active');
+                
+                // Play the video and then make it fullscreen
+                videoElement.play().then(() => {
+                    // Request fullscreen after play starts
+                    if (videoElement.requestFullscreen) {
+                        videoElement.requestFullscreen();
+                    } else if (videoElement.webkitRequestFullscreen) { /* Safari */
+                        videoElement.webkitRequestFullscreen();
+                    } else if (videoElement.msRequestFullscreen) { /* IE11 */
+                        videoElement.msRequestFullscreen();
+                    }
+                }).catch(error => {
+                    console.log("Autoplay or fullscreen request was prevented: ", error);
+                });
+            }
 
             // Simple smooth scrolling for the "Jesse Hsu" name link
             document.querySelector('.hero-text h1 a').addEventListener('click', function(e) {
