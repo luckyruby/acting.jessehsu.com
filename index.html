@@ -771,7 +771,7 @@
             document.addEventListener('MSFullscreenChange', handleFullscreenChange);
             
             function handleFullscreenChange() {
-                // If exiting fullscreen but video is still active, close it
+                // If exiting fullscreen, always close the video player
                 if (!document.fullscreenElement && 
                     !document.webkitFullscreenElement && 
                     !document.mozFullScreenElement && 
