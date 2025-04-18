@@ -162,31 +162,6 @@
             letter-spacing: 1px;
         }
 
-        /* Navigation */
-        nav {
-            display: flex;
-            justify-content: center;
-            background-color: rgba(0,0,0,0.2);
-            padding: 1rem 0;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        nav a {
-            color: var(--light-text);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: var(--accent-color);
-        }
-
         /* Main Content */
         main {
             padding: 3rem 0;
@@ -260,6 +235,15 @@
             overflow: hidden;
         }
 
+        .video-container a {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
         .video-placeholder {
             position: absolute;
             top: 0;
@@ -278,6 +262,29 @@
         
         .video-container:hover .video-placeholder {
             transform: scale(1.05);
+        }
+
+        /* Play button overlay */
+        .video-container::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background-color: rgba(230, 57, 70, 0.8);
+            border-radius: 50%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 30px;
+            z-index: 2;
+            transition: background-color 0.3s ease;
+        }
+        
+        .video-container:hover::after {
+            background-color: rgba(230, 57, 70, 1);
         }
 
         .portfolio-details {
@@ -346,37 +353,6 @@
             z-index: 5;
         }
 
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 999;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.9);
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .modal-content {
-            position: relative;
-            width: 100%;
-            max-width: 800px;
-            max-height: 80vh;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: -40px;
-            right: 0;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-        }
-
         @media (max-width: 768px) {
             .hero {
                 grid-template-columns: 1fr;
@@ -386,7 +362,7 @@
                 min-height: 245px;
                 margin-left: 0;
                 margin-right: 0;
-		width: 85%;
+                width: 85%;
                 margin: 0 auto;
             }
             
@@ -410,10 +386,6 @@
             .hero-contact .contact-label {
                 width: auto;
                 margin-right: 8px;
-            }
-
-            nav ul {
-                gap: 1rem;
             }
 
             .portfolio-grid {
@@ -468,11 +440,13 @@
             </div>
 
             <div class="portfolio-grid">
-                <!-- Les Mills (formerly #3) -->
+                <!-- Les Mills -->
                 <div class="portfolio-item">
-                    <div class="video-container" data-video="les-mills">
-                        <div class="video-placeholder" style="background-image: url('https://acting.jessehsu.com/videos/thumbnails/les_mills_ceremony.webp');">
-                        </div>
+                    <div class="video-container">
+                        <a href="https://acting.jessehsu.com/videos/les_mills_ceremony.mp4" target="_blank">
+                            <div class="video-placeholder" style="background-image: url('https://acting.jessehsu.com/videos/thumbnails/les_mills_ceremony.webp');">
+                            </div>
+                        </a>
                     </div>
                     <div class="portfolio-details">
                         <h3>Les Mills: Ceremony</h3>
@@ -480,11 +454,13 @@
                     </div>
                 </div>
 
-                <!-- Amazon TNF (formerly #5) -->
+                <!-- Amazon TNF -->
                 <div class="portfolio-item">
-                    <div class="video-container" data-video="amazon-tnf">
-                        <div class="video-placeholder" style="background-image: url('https://acting.jessehsu.com/videos/thumbnails/amazon_tnf.webp');">
-                        </div>
+                    <div class="video-container">
+                        <a href="https://acting.jessehsu.com/videos/amazon_tnf.mp4" target="_blank">
+                            <div class="video-placeholder" style="background-image: url('https://acting.jessehsu.com/videos/thumbnails/amazon_tnf.webp');">
+                            </div>
+                        </a>
                     </div>
                     <div class="portfolio-details">
                         <h3>Amazon: TNF</h3>
@@ -492,11 +468,13 @@
                     </div>
                 </div>
 
-                <!-- Hims (formerly #8) -->
+                <!-- Hims -->
                 <div class="portfolio-item">
-                    <div class="video-container" data-video="hims">
-                        <div class="video-placeholder" style="background-image: url('https://acting.jessehsu.com/videos/thumbnails/hims.webp');">
-                        </div>
+                    <div class="video-container">
+                        <a href="https://acting.jessehsu.com/videos/hims.mp4" target="_blank">
+                            <div class="video-placeholder" style="background-image: url('https://acting.jessehsu.com/videos/thumbnails/hims.webp');">
+                            </div>
+                        </a>
                     </div>
                     <div class="portfolio-details">
                         <h3>HIMS: Treatment You'll Love</h3>
@@ -504,11 +482,13 @@
                     </div>
                 </div>
 
-                <!-- Google Pixel (formerly #2) -->
+                <!-- Google Pixel -->
                 <div class="portfolio-item">
-                    <div class="video-container" data-video="google-pixel">
-                        <div class="video-placeholder" style="background-image: url('https://acting.jessehsu.com/videos/thumbnails/teampixel.webp');">
-                        </div>
+                    <div class="video-container">
+                        <a href="https://acting.jessehsu.com/videos/teampixel.mp4" target="_blank">
+                            <div class="video-placeholder" style="background-image: url('https://acting.jessehsu.com/videos/thumbnails/teampixel.webp');">
+                            </div>
+                        </a>
                     </div>
                     <div class="portfolio-details">
                         <h3>Google: Pixel Switcher</h3>
@@ -516,11 +496,13 @@
                     </div>
                 </div>
 
-                <!-- RBC (formerly #1) -->
+                <!-- RBC -->
                 <div class="portfolio-item">
-                    <div class="video-container" data-video="rbc-apple">
-                        <div class="video-placeholder" style="background-image: url('https://acting.jessehsu.com/videos/thumbnails/rbc_airpods.webp');">
-                        </div>
+                    <div class="video-container">
+                        <a href="https://acting.jessehsu.com/videos/rbc_airpods.mp4" target="_blank">
+                            <div class="video-placeholder" style="background-image: url('https://acting.jessehsu.com/videos/thumbnails/rbc_airpods.webp');">
+                            </div>
+                        </a>
                     </div>
                     <div class="portfolio-details">
                         <h3>RBC x Apple: Everyday Banking</h3>
@@ -528,11 +510,13 @@
                     </div>
                 </div>
 
-                <!-- Sofi (formerly #4) -->
+                <!-- Sofi -->
                 <div class="portfolio-item">
-                    <div class="video-container" data-video="sofi-money">
-                        <div class="video-placeholder" style="background-image: url('https://acting.jessehsu.com/videos/thumbnails/sofi_money_moves.webp');">
-                        </div>
+                    <div class="video-container">
+                        <a href="https://acting.jessehsu.com/videos/sofi_money_moves.mp4" target="_blank">
+                            <div class="video-placeholder" style="background-image: url('https://acting.jessehsu.com/videos/thumbnails/sofi_money_moves.webp');">
+                            </div>
+                        </a>
                     </div>
                     <div class="portfolio-details">
                         <h3>Sofi: Money Moves</h3>
@@ -540,11 +524,13 @@
                     </div>
                 </div>
                 
-                <!-- Realtor (formerly #7) -->
+                <!-- Realtor -->
                 <div class="portfolio-item">
-                    <div class="video-container" data-video="realtor">
-                        <div class="video-placeholder" style="background-image: url('https://acting.jessehsu.com/videos/thumbnails/so_many_houses_realtor_com.webp');">
-                        </div>
+                    <div class="video-container">
+                        <a href="https://acting.jessehsu.com/videos/so_many_houses_realtor_com.mp4" target="_blank">
+                            <div class="video-placeholder" style="background-image: url('https://acting.jessehsu.com/videos/thumbnails/so_many_houses_realtor_com.webp');">
+                            </div>
+                        </a>
                     </div>
                     <div class="portfolio-details">
                         <h3>Realtor.com: So Many Houses</h3>
@@ -552,11 +538,13 @@
                     </div>
                 </div>
                 
-                <!-- Mattress Firm (formerly #9) -->
+                <!-- Mattress Firm -->
                 <div class="portfolio-item">
-                    <div class="video-container" data-video="mattress-firm">
-                        <div class="video-placeholder" style="background-image: url('https://acting.jessehsu.com/videos/thumbnails/mattress.webp');">
-                        </div>
+                    <div class="video-container">
+                        <a href="https://acting.jessehsu.com/videos/mattress.mp4" target="_blank">
+                            <div class="video-placeholder" style="background-image: url('https://acting.jessehsu.com/videos/thumbnails/mattress.webp');">
+                            </div>
+                        </a>
                     </div>
                     <div class="portfolio-details">
                         <h3>Mattress Firm: Jesse Woke Up</h3>
@@ -564,11 +552,13 @@
                     </div>
                 </div>
                 
-                <!-- EZCater (formerly #6) -->
+                <!-- EZCater -->
                 <div class="portfolio-item">
-                    <div class="video-container" data-video="ezcater">
-                        <div class="video-placeholder" style="background-image: url('https://acting.jessehsu.com/videos/thumbnails/ezcater.webp');">
-                        </div>
+                    <div class="video-container">
+                        <a href="https://acting.jessehsu.com/videos/ezcater.mp4" target="_blank">
+                            <div class="video-placeholder" style="background-image: url('https://acting.jessehsu.com/videos/thumbnails/ezcater.webp');">
+                            </div>
+                        </a>
                     </div>
                     <div class="portfolio-details">
                         <h3>EZCater: Consideration</h3>
@@ -578,25 +568,28 @@
             </div>
         </section>
 
-	<section id="short-films">
-	    <div class="section-title" style="text-align: left;">
-		<h2>Short Films</h2>
-	    </div>
+        <!-- Short Films Section -->
+        <section id="short-films">
+            <div class="section-title" style="text-align: left;">
+                <h2>Short Films</h2>
+            </div>
 
-	    <div class="portfolio-grid">
-		<!-- Return -->
-		<div class="portfolio-item">
-		    <div class="video-container" data-video="return">
-			<div class="video-placeholder" style="background-image: url('https://acting.jessehsu.com/videos/thumbnails/return.webp');">
-			</div>
-		    </div>
-		    <div class="portfolio-details">
-			<h3>Return</h3>
-			<p>Lawrence Chen</p>
-		    </div>
-		</div>
-	    </div>
-	</section>
+            <div class="portfolio-grid">
+                <!-- Return -->
+                <div class="portfolio-item">
+                    <div class="video-container">
+                        <a href="https://acting.jessehsu.com/videos/return.mp4" target="_blank">
+                            <div class="video-placeholder" style="background-image: url('https://acting.jessehsu.com/videos/thumbnails/return.webp');">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="portfolio-details">
+                        <h3>Return</h3>
+                        <p>Lawrence Chen</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <section id="about">
             <div class="section-title" style="text-align: left;">
@@ -611,7 +604,7 @@
             <div class="about-content">
                 <div class="about-text" style="flex: 1; min-width: 100%;">
                     <p>Jesse began his career in New York where he studied with UCB and after moving to Los Angeles a few years ago, he has booked 12 commercials from 2020-2022 and 10 in 2024. He has taken commercial technique courses with AHC, Killian's and voiceover classes at Real Voice LA and has a commercial voice demo.</p>
-		    <br>
+                    <br>
                     <p>In 2022, he was a guest star in a web series, <a href="https://www.imdb.com/title/tt21622992/" target="_blank">Millie & Maddie</a> and also starred in his first feature film, <a href="https://www.imdb.com/title/tt23329452/" target="_blank">Starring Jerry As Himself</a> which premiered at the 2022 Slamdance Film Festival and is now available to stream on Amazon Prime Video and Apple TV+.</p>
                 </div>
             </div>
@@ -627,367 +620,18 @@
         </div>
     </footer>
 
-    <!-- Video Modal -->
-    <div class="modal" id="videoModal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <div id="videoPlayer"></div>
-        </div>
-    </div>
-
     <script>
+        // Simple smooth scrolling for the "Jesse Hsu" name link
         document.addEventListener('DOMContentLoaded', function() {
-            // Easter Egg functionality
-            let tapCount = 0;
-            let lastTap = 0;
-            let keySequence = "";
-            const targetSequence = "luckyruby";
-            const easterEggVideoSrc = "https://acting.jessehsu.com/videos/jesse_bts.mp4";
-            
-            // Handle tap events for mobile
-            document.body.addEventListener('touchstart', function(e) {
-                const currentTime = new Date().getTime();
-                const tapTime = currentTime - lastTap;
-                
-                // Reset if more than 1000ms between taps
-                if (tapTime > 1000) {
-                    tapCount = 1;
-                } else {
-                    tapCount++;
-                }
-                
-                lastTap = currentTime;
-                
-                // Check if we've reached 7 taps
-                if (tapCount >= 7) {
-                    playEasterEggVideo();
-                    tapCount = 0;
-                }
-            });
-            
-            // Handle keyboard events for desktop
-            document.addEventListener('keydown', function(e) {
-                keySequence += e.key.toLowerCase();
-                
-                // Only keep the most recent characters matching the target length
-                if (keySequence.length > targetSequence.length) {
-                    keySequence = keySequence.substring(keySequence.length - targetSequence.length);
-                }
-                
-                // Check if sequence matches
-                if (keySequence === targetSequence) {
-                    playEasterEggVideo();
-                    keySequence = "";
-                }
-            });
-            
-            // Function to play the easter egg video
-            function playEasterEggVideo() {
-                // Create a temporary fullscreen video element
-                const fullscreenContainer = document.createElement('div');
-                fullscreenContainer.id = 'fullscreen-video-container';
-                fullscreenContainer.style.position = 'fixed';
-                fullscreenContainer.style.top = '0';
-                fullscreenContainer.style.left = '0';
-                fullscreenContainer.style.width = '100%';
-                fullscreenContainer.style.height = '100%';
-                fullscreenContainer.style.backgroundColor = '#000';
-                fullscreenContainer.style.zIndex = '9999';
-                
-                const video = document.createElement('video');
-                video.style.width = '100%';
-                video.style.height = '100%';
-                video.style.objectFit = 'contain';
-                video.controls = true;
-                video.autoplay = true;
-                video.playsInline = true; // Important for iOS
-                
-                const source = document.createElement('source');
-                source.src = easterEggVideoSrc;
-                source.type = 'video/mp4';
-                
-                video.appendChild(source);
-                fullscreenContainer.appendChild(video);
-                
-                // Add close button
-                const closeButton = document.createElement('div');
-                closeButton.innerHTML = '×';
-                closeButton.style.position = 'absolute';
-                closeButton.style.top = '20px';
-                closeButton.style.right = '20px';
-                closeButton.style.color = '#fff';
-                closeButton.style.fontSize = '40px';
-                closeButton.style.cursor = 'pointer';
-                closeButton.style.zIndex = '10000';
-                closeButton.style.width = '50px';
-                closeButton.style.height = '50px';
-                closeButton.style.display = 'flex';
-                closeButton.style.alignItems = 'center';
-                closeButton.style.justifyContent = 'center';
-                closeButton.style.borderRadius = '50%';
-                closeButton.style.background = 'rgba(0,0,0,0.5)';
-                
-                closeButton.addEventListener('click', function() {
-                    // Exit fullscreen if we're in fullscreen mode
-                    if (document.fullscreenElement || 
-                        document.webkitFullscreenElement ||
-                        document.mozFullScreenElement ||
-                        document.msFullscreenElement) {
-                        if (document.exitFullscreen) {
-                            document.exitFullscreen();
-                        } else if (document.webkitExitFullscreen) {
-                            document.webkitExitFullscreen();
-                        } else if (document.mozCancelFullScreen) {
-                            document.mozCancelFullScreen();
-                        } else if (document.msExitFullscreen) {
-                            document.msExitFullscreen();
-                        }
-                    }
-                    
-                    document.body.removeChild(fullscreenContainer);
-                });
-                
-                // Allow closing by pressing Escape key
-                const handleEscape = function(e) {
-                    if (e.key === 'Escape' && document.getElementById('fullscreen-video-container')) {
-                        document.body.removeChild(fullscreenContainer);
-                        document.removeEventListener('keydown', handleEscape);
-                    }
-                };
-                
-                document.addEventListener('keydown', handleEscape);
-                
-                // Also allow closing by tapping/clicking on the video container (but not the video itself)
-                fullscreenContainer.addEventListener('click', function(e) {
-                    if (e.target === fullscreenContainer) {
-                        // Exit fullscreen if we're in fullscreen mode
-                        if (document.fullscreenElement || 
-                            document.webkitFullscreenElement ||
-                            document.mozFullScreenElement ||
-                            document.msFullscreenElement) {
-                            if (document.exitFullscreen) {
-                                document.exitFullscreen();
-                            } else if (document.webkitExitFullscreen) {
-                                document.webkitExitFullscreen();
-                            } else if (document.mozCancelFullScreen) {
-                                document.mozCancelFullScreen();
-                            } else if (document.msExitFullscreen) {
-                                document.msExitFullscreen();
-                            }
-                        }
-                        
-                        document.body.removeChild(fullscreenContainer);
-                    }
-                });
-                
-                fullscreenContainer.appendChild(closeButton);
-                document.body.appendChild(fullscreenContainer);
-                
-                // Close when video ends
-                video.addEventListener('ended', function() {
-                    // Exit fullscreen if we're in fullscreen mode
-                    if (document.fullscreenElement || 
-                        document.webkitFullscreenElement ||
-                        document.mozFullScreenElement ||
-                        document.msFullscreenElement) {
-                        if (document.exitFullscreen) {
-                            document.exitFullscreen();
-                        } else if (document.webkitExitFullscreen) {
-                            document.webkitExitFullscreen();
-                        } else if (document.mozCancelFullScreen) {
-                            document.mozCancelFullScreen();
-                        } else if (document.msExitFullscreen) {
-                            document.msExitFullscreen();
-                        }
-                    }
-                    
-                    if (document.getElementById('fullscreen-video-container')) {
-                        document.body.removeChild(fullscreenContainer);
-                    }
-                });
-                
-                // Ensure video starts playing before requesting fullscreen (important for mobile)
-                video.addEventListener('canplay', function() {
-                    // Wait a tiny bit to ensure video is ready
-                    setTimeout(function() {
-                        // Try to enter true fullscreen mode
-                        if (isMobileDevice()) {
-                            // On mobile, try the video element directly for better results
-                            if (video.requestFullscreen) {
-                                video.requestFullscreen().catch(e => console.log("Couldn't enter fullscreen:", e));
-                            } else if (video.webkitRequestFullscreen) {
-                                video.webkitRequestFullscreen().catch(e => console.log("Couldn't enter fullscreen:", e));
-                            } else if (video.mozRequestFullScreen) {
-                                video.mozRequestFullScreen().catch(e => console.log("Couldn't enter fullscreen:", e));
-                            } else if (video.msRequestFullscreen) {
-                                video.msRequestFullscreen().catch(e => console.log("Couldn't enter fullscreen:", e));
-                            }
-                        } else {
-                            // On desktop, use the container for better visual appearance
-                            if (fullscreenContainer.requestFullscreen) {
-                                fullscreenContainer.requestFullscreen().catch(e => console.log("Couldn't enter fullscreen:", e));
-                            } else if (fullscreenContainer.webkitRequestFullscreen) {
-                                fullscreenContainer.webkitRequestFullscreen().catch(e => console.log("Couldn't enter fullscreen:", e));
-                            } else if (fullscreenContainer.mozRequestFullScreen) {
-                                fullscreenContainer.mozRequestFullScreen().catch(e => console.log("Couldn't enter fullscreen:", e));
-                            } else if (fullscreenContainer.msRequestFullscreen) {
-                                fullscreenContainer.msRequestFullscreen().catch(e => console.log("Couldn't enter fullscreen:", e));
-                            }
-                        }
-                    }, 100);
-                });
-                
-                // Force play (needed for some mobile browsers)
-                video.play().catch(e => console.log("Autoplay prevented, user may need to interact first:", e));
-            }
-            
-            // Modal functionality
-            const videoContainers = document.querySelectorAll('.video-container');
-            const modal = document.getElementById('videoModal');
-            const closeModal = document.querySelector('.close-modal');
-            const videoPlayer = document.getElementById('videoPlayer');
-            
-            // Function to check if device is mobile
-            function isMobileDevice() {
-                return (window.innerWidth <= 768);
-            }
-            
-            // Function to create inline video element
-            function createInlineVideo(container, videoSrc, videoType) {
-                // Remove existing content
-                const placeholder = container.querySelector('.video-placeholder');
-                container.removeChild(placeholder);
-                
-                // Create video element
-                const video = document.createElement('video');
-                video.setAttribute('controls', '');
-                video.setAttribute('width', '100%');
-                video.style.position = 'absolute';
-                video.style.top = '0';
-                video.style.left = '0';
-                video.style.width = '100%';
-                video.style.height = '100%';
-                
-                // Create source element
-                const source = document.createElement('source');
-                source.src = videoSrc;
-                source.type = videoType;
-                
-                // Add source to video
-                video.appendChild(source);
-                
-                // Add fallback text
-                video.innerHTML += 'Your browser does not support the video tag.';
-                
-                // Add video to container
-                container.appendChild(video);
-                
-                // Play the video
-                video.play().catch(e => console.log("Autoplay prevented:", e));
-            }
-            
-            // Handle video container clicks
-            videoContainers.forEach(container => {
-                container.addEventListener('click', function() {
-                    const videoId = this.getAttribute('data-video');
-                    let videoSrc = '';
-                    let videoType = '';
-                    
-                    // Determine video source and type
-                    if (videoId === 'rbc-apple') {
-                        videoSrc = 'https://acting.jessehsu.com/videos/rbc_airpods.mp4';
-                        videoType = 'video/mp4';
-                    } else if (videoId === 'google-pixel') {
-                        videoSrc = 'https://acting.jessehsu.com/videos/teampixel.mp4';
-                        videoType = 'video/mp4';
-                    } else if (videoId === 'les-mills') {
-                        videoSrc = 'https://acting.jessehsu.com/videos/les_mills_ceremony.mp4';
-                        videoType = 'video/mp4';
-                    } else if (videoId === 'sofi-money') {
-                        videoSrc = 'https://acting.jessehsu.com/videos/sofi_money_moves.mp4';
-                        videoType = 'video/mp4';
-                    } else if (videoId === 'amazon-tnf') {
-                        videoSrc = 'https://acting.jessehsu.com/videos/amazon_tnf.mp4';
-                        videoType = 'video/mp4';
-                    } else if (videoId === 'ezcater') {
-                        videoSrc = 'https://acting.jessehsu.com/videos/ezcater.mp4';
-                        videoType = 'video/mp4';
-                    } else if (videoId === 'realtor') {
-                        videoSrc = 'https://acting.jessehsu.com/videos/so_many_houses_realtor_com.mp4';
-                        videoType = 'video/mp4';
-                    } else if (videoId === 'hims') {
-                        videoSrc = 'https://acting.jessehsu.com/videos/hims.mp4';
-                        videoType = 'video/mp4';
-                    } else if (videoId === 'mattress-firm') {
-                        videoSrc = 'https://acting.jessehsu.com/videos/mattress.mp4';
-                        videoType = 'video/mp4';
-		    } else if (videoId === 'return') {
-		    	videoSrc = 'https://acting.jessehsu.com/videos/return.mp4';
-		    	videoType = 'video/mp4';
-                    }
-                    
-                    // On mobile, play video inline
-                    if (isMobileDevice() && videoSrc) {
-                        createInlineVideo(this, videoSrc, videoType);
-                    }
-                    // On desktop, use modal
-                    else if (videoSrc) {
-                        videoPlayer.innerHTML = `
-                            <video width="100%" controls autoplay>
-                                <source src="${videoSrc}" type="${videoType}">
-                                Your browser does not support the video tag.
-                            </video>
-                        `;
-                        modal.style.display = 'flex';
-                    }
-                    // Fallback for missing videos
-                    else {
-                        videoPlayer.innerHTML = `
-                            <div style="padding-top: 56.25%; background: #000; position: relative;">
-                                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.2rem;">
-                                    ${videoId.replace('-', ' ')} video would play here
-                                </div>
-                            </div>
-                        `;
-                        modal.style.display = 'flex';
-                    }
-                });
-            });
-
-            // Smooth scrolling for Jesse Hsu name link
             document.querySelector('.hero-text h1 a').addEventListener('click', function(e) {
                 e.preventDefault();
-
                 const targetId = this.getAttribute('href');
                 const targetElement = document.querySelector(targetId);
-
+                
                 window.scrollTo({
-                    top: targetElement.offsetTop + 700,
+                    top: targetElement.offsetTop,
                     behavior: 'smooth'
                 });
-            });
-
-            // Close modal
-            closeModal.addEventListener('click', function() {
-                modal.style.display = 'none';
-                videoPlayer.innerHTML = '';
-            });
-
-            // Close modal when clicking outside content
-            window.addEventListener('click', function(event) {
-                if (event.target === modal) {
-                    modal.style.display = 'none';
-                    videoPlayer.innerHTML = '';
-                }
-            });
-            
-            // Handle resize events
-            window.addEventListener('resize', function() {
-                // If user switches from mobile to desktop view, reload the page
-                // This ensures the thumbnails are properly displayed
-                if (!isMobileDevice() && document.querySelector('.video-container video')) {
-                    location.reload();
-                }
             });
         });
     </script>
