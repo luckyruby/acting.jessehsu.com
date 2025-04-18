@@ -264,28 +264,7 @@
             transform: scale(1.05);
         }
 
-        /* Play button overlay */
-        .video-container::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 60px;
-            height: 60px;
-            background-color: rgba(230, 57, 70, 0.8);
-            border-radius: 50%;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: 30px;
-            z-index: 2;
-            transition: background-color 0.3s ease;
-        }
-        
-        .video-container:hover::after {
-            background-color: rgba(230, 57, 70, 1);
-        }
+        /* No play button overlay */
 
         .portfolio-details {
             padding: 0.8rem 1rem;
@@ -621,8 +600,52 @@
     </footer>
 
     <script>
-        // Simple smooth scrolling for the "Jesse Hsu" name link
         document.addEventListener('DOMContentLoaded', function() {
+            // Easter Egg functionality - simplified version
+            let tapCount = 0;
+            let lastTap = 0;
+            let keySequence = "";
+            const targetSequence = "luckyruby";
+            const easterEggVideoSrc = "https://acting.jessehsu.com/videos/jesse_bts.mp4";
+            
+            // Handle tap events for mobile
+            document.body.addEventListener('touchstart', function(e) {
+                const currentTime = new Date().getTime();
+                const tapTime = currentTime - lastTap;
+                
+                // Reset if more than 1000ms between taps
+                if (tapTime > 1000) {
+                    tapCount = 1;
+                } else {
+                    tapCount++;
+                }
+                
+                lastTap = currentTime;
+                
+                // Check if we've reached 7 taps
+                if (tapCount >= 7) {
+                    window.open(easterEggVideoSrc + "?autoplay=1", "_blank");
+                    tapCount = 0;
+                }
+            });
+            
+            // Handle keyboard events for desktop
+            document.addEventListener('keydown', function(e) {
+                keySequence += e.key.toLowerCase();
+                
+                // Only keep the most recent characters matching the target length
+                if (keySequence.length > targetSequence.length) {
+                    keySequence = keySequence.substring(keySequence.length - targetSequence.length);
+                }
+                
+                // Check if sequence matches
+                if (keySequence === targetSequence) {
+                    window.open(easterEggVideoSrc + "?autoplay=1", "_blank");
+                    keySequence = "";
+                }
+            });
+
+            // Simple smooth scrolling for the "Jesse Hsu" name link
             document.querySelector('.hero-text h1 a').addEventListener('click', function(e) {
                 e.preventDefault();
                 const targetId = this.getAttribute('href');
