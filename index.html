@@ -771,12 +771,12 @@
             document.addEventListener('MSFullscreenChange', handleFullscreenChange);
             
             function handleFullscreenChange() {
-                // If exiting fullscreen, always close the video player
+                // If exiting fullscreen, always close the video player completely
                 if (!document.fullscreenElement && 
                     !document.webkitFullscreenElement && 
                     !document.mozFullScreenElement && 
-                    !document.msFullscreenElement && 
-                    videoPlayer.classList.contains('active')) {
+                    !document.msFullscreenElement) {
+                    // Make sure we close the player regardless of what device we're on
                     videoPlayer.classList.remove('active');
                     videoElement.pause();
                     videoElement.src = '';
