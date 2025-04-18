@@ -750,6 +750,14 @@
             document.addEventListener('mozfullscreenchange', handleFullscreenChange);
             document.addEventListener('MSFullscreenChange', handleFullscreenChange);
             
+            // Add iOS Safari specific event for exiting fullscreen
+            videoElement.addEventListener('webkitendfullscreen', function() {
+                // iOS Safari specific event for exiting fullscreen
+                videoPlayer.classList.remove('active');
+                videoElement.pause();
+                videoElement.src = '';
+            });
+            
             function handleFullscreenChange() {
                 // If exiting fullscreen, always close the video player completely
                 if (!document.fullscreenElement && 
