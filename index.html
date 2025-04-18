@@ -578,6 +578,26 @@
             </div>
         </section>
 
+	<section id="short-films">
+	    <div class="section-title" style="text-align: left;">
+		<h2>Short Films</h2>
+	    </div>
+
+	    <div class="portfolio-grid">
+		<!-- Return -->
+		<div class="portfolio-item">
+		    <div class="video-container" data-video="return">
+			<div class="video-placeholder" style="background-image: url('https://acting.jessehsu.com/videos/thumbnails/return.webp');">
+			</div>
+		    </div>
+		    <div class="portfolio-details">
+			<h3>Return</h3>
+			<p>Lawrence Chen</p>
+		    </div>
+		</div>
+	    </div>
+	</section>
+
         <section id="about">
             <div class="section-title" style="text-align: left;">
                 <h2>About Me</h2>
@@ -901,6 +921,9 @@
                     } else if (videoId === 'mattress-firm') {
                         videoSrc = 'https://acting.jessehsu.com/videos/mattress.mp4';
                         videoType = 'video/mp4';
+		    } else if (videoId === 'return') {
+		    	videoSrc = 'https://acting.jessehsu.com/videos/return.mp4';
+		    	videoType = 'video/mp4';
                     }
                     
                     // On mobile, play video inline
